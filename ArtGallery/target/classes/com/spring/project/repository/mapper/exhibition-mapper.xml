@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Exhibition">
+ 
+	<select id="findAll" resultType="edto">
+		select * from exhibition_table
+	</select>
+	
+	<select id="pagingList" parameterType="java.util.HashMap" resultType="edto">
+		select * from exhibition_table order by e_number desc limit #{start}, #{limit}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(e_number) from exhibition_table
+	</select>
+	
+	<select id="detail" parameterType="long" resultType="edto">
+ 		select * from exhibition_table where e_number=#{e_number}
+ 	</select>
+
+	<update id="hits" parameterType="long">
+ 		update exhibition_table set e_hits=(e_hits+1) where e_number=#{e_number}
+	</update>
+	
+	<insert id="saveFile" parameterType="edto">
+ 		insert into exhibition_table(e_writer, e_title, e_contents, e_date, e_filename, e_email)
+ 			values(#{e_writer},#{e_title},#{e_contents}, now(), #{e_filename}, #{e_email})
+ 	</insert>
+	
+	<update id="update" parameterType="edto">
+ 		update exhibition_table set e_title=#{e_title}, e_contents=#{e_contents}, e_date=now() where e_number=#{e_number}
+	</update>
+	
+	<update id="updateFile" parameterType="edto">
+ 		update exhibition_table set e_title=#{e_title}, e_contents=#{e_contents}, e_date=now(), e_filename=#{e_filename} where e_number=#{e_number}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		delete from exhibition_table where e_number=#{e_number}
+	</delete>
+	
+	<select id="findHeartM" parameterType="java.util.HashMap" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and m_number=#{m_number}
+ 	</select>
+ 	
+ 	<select id="findHeartK" parameterType="java.util.HashMap" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and k_number=#{k_number}
+ 	</select>
+ 	
+ 	<select id="findHeartN" parameterType="java.util.HashMap" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and n_number=#{n_number}
+ 	</select>
+ 	
+ 	
+ 	<insert id="insertHeartM" parameterType="hdto">
+ 		insert into heart_table(e_number, m_number, heart)
+ 			values(#{e_number}, #{m_number}, 1)
+ 	</insert>
+ 	
+ 	<select id="findHeartEM" parameterType="hdto" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and m_number=#{m_number}
+ 	</select>
+ 	
+ 	<delete id="deleteHeartM" parameterType="hdto">
+		delete from heart_table where e_number=#{e_number} and m_number=#{m_number}
+	</delete>
+	
+	
+ 	<insert id="insertHeartK" parameterType="hdto">
+ 		insert into heart_table(e_number, k_number, heart)
+ 			values(#{e_number}, #{k_number}, 1)
+ 	</insert>
+ 	
+ 	<select id="findHeartEK" parameterType="hdto" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and k_number=#{k_number}
+ 	</select>
+ 	
+ 	<delete id="deleteHeartK" parameterType="hdto">
+		delete from heart_table where e_number=#{e_number} and k_number=#{k_number}
+	</delete>
+	
+	
+ 	<insert id="insertHeartN" parameterType="hdto">
+ 		insert into heart_table(e_number, n_number, heart)
+ 			values(#{e_number}, #{n_number}, 1)
+ 	</insert>
+ 	
+ 	<select id="findHeartEN" parameterType="hdto" resultType="hdto">
+ 		select * from heart_table where e_number=#{e_number} and n_number=#{n_number}
+ 	</select>
+ 	
+ 	<delete id="deleteHeartN" parameterType="hdto">
+		delete from heart_table where e_number=#{e_number} and n_number=#{n_number}
+	</delete>
+ 	
+ 	<update id="heartCount" parameterType="long">
+ 		update exhibition_table set e_count=(select count(e_number) from heart_table where e_number=#{e_number}) where e_number=#{e_number}
+	</update>
+ 	
+ </mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases> 
+		<typeAlias alias="mdto" type="com.spring.project.dto.MemberDTO"/>
+		<typeAlias alias="adto" type="com.spring.project.dto.AuctionDTO"/>
+		<typeAlias alias="edto" type="com.spring.project.dto.ExhibitionDTO"/>
+		<typeAlias alias="kdto" type="com.spring.project.dto.KakaoDTO"/>
+		<typeAlias alias="ndto" type="com.spring.project.dto.NaverDTO"/>
+		<typeAlias alias="hdto" type="com.spring.project.dto.HeartDTO"/>
+		<typeAlias alias="rdto" type="com.spring.project.dto.ReviewDTO"/>
+	</typeAliases>
+</configuration>

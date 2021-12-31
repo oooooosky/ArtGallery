@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Auction"> 
+	
+	<select id="auctionForm" resultType="adto">
+		select * from art_table order by a_number desc limit 1
+	</select>
+	
+	<select id="bidForm" resultType="adto">
+		select * from bid_table order by a_number desc limit 1
+	</select>
+	
+	<insert id="saveFile" parameterType="adto">
+		insert into art_table(a_writer, a_title, a_contents, a_date, a_filename)
+ 			values(#{a_writer},#{a_title},#{a_contents}, #{a_date}, #{a_filename})
+	</insert>
+	
+	<insert id="savePrice" parameterType="adto">
+		insert into bid_table(b_price, b_bid)
+ 			values(#{b_price}, #{b_price})
+	</insert>
+	
+	<select id="find" resultType="int">
+		select count(a_stock) from art_table where a_stock = 1
+	</select>
+	
+	<update id="saveBid" parameterType="adto">
+		update bid_table set b_bid=#{b_bid} where a_number=#{a_number}
+	</update>
+	
+	<update id="saveAid" parameterType="adto">
+		update art_table set a_id=#{a_id}, a_email=null where a_number=#{a_number}
+	</update>
+	
+	<update id="saveEmail" parameterType="adto">
+		update art_table set a_id=#{a_id}, a_email=#{a_email} where a_number=#{a_number}
+	</update>
+	
+	<update id="success" parameterType="adto">
+		update art_table set m_id=#{m_id}, a_stock=0 where a_number=#{a_number}
+	</update>
+	
+	<select id="findAll" resultType="adto">
+		select * from art_table where a_stock = 0
+	</select>
+	
+	<select id="pagingList" parameterType="java.util.HashMap" resultType="adto">
+		select * from art_table order by a_number desc limit #{start}, #{limit}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(a_number) from art_table
+	</select>
+	
+	<select id="detail" parameterType="long" resultType="adto">
+ 		select * from art_table where a_number=#{a_number}
+ 	</select>
+	
+	<insert id="reviewWriting" parameterType="rdto">
+		insert into review_table(m_id, a_email, a_title, r_title, r_contents)
+			values(#{m_id}, #{a_email}, #{a_title}, #{r_title}, #{r_contents})
+	</insert>
+	
+	<select id="reviewFindAll" resultType="rdto">
+		select * from review_table
+	</select>
+	
+	<select id="reviewPagingList" parameterType="java.util.HashMap" resultType="rdto">
+		select * from review_table order by r_number desc limit #{start}, #{limit}
+	</select>
+	
+	<select id="reviewDetail" parameterType="long" resultType="rdto">
+ 		select * from review_table where r_number=#{r_number}
+ 	</select>
+ 	
+ 	<select id="findReview" parameterType="rdto" resultType="rdto">
+ 		select * from review_table where m_id=#{m_id} and a_title=#{a_title} and a_email=#{a_email}
+ 	</select>
+ 	
+ 	<update id="autoUpdate" parameterType="rdto">
+ 		update review_table set r_title=#{r_title}, r_contents=#{r_contents} where m_id=#{m_id} and a_title=#{a_title} and a_email=#{a_email}
+ 	</update>
+	
+ </mapper>

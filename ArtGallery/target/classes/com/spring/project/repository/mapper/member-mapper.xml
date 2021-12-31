@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Member"> 
+	
+	<insert id="join" parameterType="mdto">
+ 		insert into member_table(m_id, m_pw, m_name, m_phone, m_filename)
+ 			values(#{m_id},#{m_pw},#{m_name},#{m_phone},#{m_filename})
+ 	</insert>
+	
+	<select id="idDuplicate" parameterType="String" resultType="String">
+ 		select m_id from member_table where m_id=#{m_id}
+ 	</select>
+	
+	<select id="login" parameterType="mdto" resultType="mdto">
+ 		select * from member_table where m_id=#{m_id} and m_pw=#{m_pw}
+ 	</select>
+	
+	<select id="findNum" parameterType="long" resultType="mdto">
+		select * from member_table where m_number=#{m_number}
+	</select>
+	
+	<update id="updateFile" parameterType="mdto">
+		update member_table set m_name=#{m_name}, m_phone=#{m_phone}, m_filename=#{m_filename} where m_number=#{m_number} and m_pw=#{m_pw}
+	</update>
+
+	<update id="update" parameterType="mdto">
+		update member_table set m_name=#{m_name}, m_phone=#{m_phone} where m_number=#{m_number} and m_pw=#{m_pw}
+	</update>
+	
+	<select id="findAll" resultType="mdto">
+		select * from member_table
+	</select>
+	
+	<select id="detail" resultType="mdto">
+		select * from member_table where m_number=#{m_number}
+	</select>
+	
+	<delete id="delete" parameterType="long">
+ 		delete from member_table where m_number=#{m_number}
+ 	</delete>
+ 	
+	<select id="findKakao" parameterType="java.util.HashMap" resultType="kdto">
+		select * from kakao_table where k_name=#{nickname} and k_email=#{email}
+	</select>
+	
+	<insert id="kakaoInsert" parameterType="java.util.HashMap">
+		insert into kakao_table(k_name, k_email)
+			values(#{nickname}, #{email})
+	</insert>
+	
+	<select id="findNaver" parameterType="ndto" resultType="ndto">
+		select * from naver_table where n_name=#{n_name} and n_id=#{n_id} and n_email=#{n_email}
+	</select>
+	
+	<insert id="naverInsert" parameterType="ndto">
+		insert into naver_table(n_age, n_birthday, n_email, n_gender, n_id, n_name, n_nickName)
+			values(#{n_age}, #{n_birthday}, #{n_email}, #{n_gender}, #{n_id}, #{n_name}, #{n_nickName})
+	</insert>
+	
+	<select id="kakaoNumber" parameterType="kdto" resultType="kdto">
+		select * from kakao_table where k_name=#{k_name} and k_email=#{k_email}
+	</select>
+	
+ </mapper>
