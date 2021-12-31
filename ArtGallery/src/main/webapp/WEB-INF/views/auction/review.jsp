@@ -64,7 +64,7 @@
         
         <div class="d-flex bd-highlight">
 			<div class="p-2 flex-grow-1 bd-highlight" style="font-size:1.5em;">
-				<a class="nav-link active text-dark" aria-current="page" href="/auction/paging">R e v i e w</a>
+				<a class="nav-link active text-dark" aria-current="page" href="/auction/reviewPaging">R e v i e w</a>
 			</div>
 		</div>
         
@@ -72,15 +72,15 @@
             <table class="table table-hover text-center">
                 <tr>
                     <th>리뷰 번호</th>
-                    <th>작품명</th>
                     <th>리뷰 제목</th>
+                    <th>구매 작품명</th>
                     <th>작성자</th>
                 </tr>
             <c:forEach items="${rList}" var="r">
                 <tr>
                     <td>${r.r_number}</td>
-                    <td>${r.a_title}</td>
                     <td><a class="text-dark" style="text-decoration-line: none;" href="/auction/reviewDetail?r_number=${r.r_number}&page=${paging.page}">${r.r_title}</a></td>
+                    <td>${r.a_title}</td>
                     <td>${r.m_id}</td>
                 </tr>
             </c:forEach>
