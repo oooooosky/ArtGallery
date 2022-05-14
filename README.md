@@ -59,3 +59,102 @@
 9. 카카오 API를 이용한 카카오 로그인 & 로그아웃 기능 구현
 
 10. 네이버 API를 이용한 네이버 로그인 & 로그아웃 기능 구현
+
+<hr>
+
+ DB 정보
+```
+use ArtGallery;
+
+drop table member_table;
+create table member_table (
+	m_number bigint auto_increment,
+    m_id varchar(20) not null unique,
+    m_pw varchar(16) not null,
+    m_name varchar(20) not null,
+    m_phone varchar(20) not null,
+    m_filename varchar(100),
+    constraint primary key(m_number)
+);
+
+drop table exhibition_table;
+create table exhibition_table (
+	e_number bigint auto_increment,
+    e_title varchar(50) not null,
+    e_writer varchar(20) not null,
+    e_contents varchar(2000) not null,
+    e_hits int default 0,
+    e_date datetime,
+    e_filename varchar(100),
+    e_email varchar(100),
+    e_count bigint,
+    constraint primary key(e_number)
+);
+
+drop table art_table;
+create table art_table (
+	a_number bigint auto_increment,
+    a_title varchar(50) not null,
+    a_writer varchar(20) not null,
+    a_contents varchar(2000) not null,
+    a_stock int default 1,
+    a_date date,
+    m_id varchar(20),
+    a_id varchar(20),
+    a_email varchar(50),
+    a_filename varchar(100),
+    constraint primary key(a_number)
+);
+
+drop table bid_table;
+create table bid_table (
+    a_number bigint auto_increment,
+    b_price bigint default 0,
+    b_bid bigint,
+    constraint primary key(a_number),
+    constraint foreign key(a_number) references art_table(a_number)
+);
+
+drop table kakao_table;
+create table kakao_table (
+	k_number bigint auto_increment,
+    k_name varchar(20) not null,
+    k_email varchar(50) not null,
+    constraint primary key(k_number)
+);
+
+drop table naver_table;
+create table naver_table (
+	n_number bigint auto_increment,
+    n_age varchar(10) not null,
+    n_birthday varchar(10) not null,
+    n_email varchar(50) not null,
+    n_gender varchar(5) not null,
+    n_id varchar(100) not null,
+    n_name varchar(20) not null,
+    n_nickName varchar(20) not null,
+    constraint primary key(n_number)
+);
+
+drop table heart_table;
+create table heart_table (
+	h_number bigint auto_increment,
+    e_number bigint,
+    m_number bigint,
+    k_number bigint,
+    n_number bigint,
+    heart int default 0,
+    constraint primary key(h_number)
+);
+
+drop table review_table;
+create table review_table(
+	r_number bigint auto_increment,
+    m_id varchar(20),
+    a_email varchar(50),
+    a_title varchar(50),
+    r_title varchar(50),
+    r_contents varchar(2000),
+    constraint primary key(r_number)
+);
+```
